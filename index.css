@@ -22,7 +22,8 @@
     box-sizing: inherit;
 }
 
-:root {
+:root,
+[data-theme="dark"] {
     --font-size-small: 1.8rem;
     --font-size-normal: 2.2rem;
     --font-size-medium: 2.8rem;
@@ -34,15 +35,28 @@
     --line-height-normal: 1.7;
     --line-height-small: 1.2;
 
-    --black: #000;
-    --pink: #ff3258;
-    --white: #f0e9f2;
-    --white-1: #e5e5e6da;
+    --bg: #000;
+    --text: #e5e5e6da;
+    --text-strong: #f0e9f2;
+    --text-muted: #e5e5e6da;
+    --accent: #ff3258;
+    --surface: #111;
+    --border: rgb(36, 35, 35);
+    --overlay-start: rgba(0, 0, 0, 0.45);
+    --overlay-end: rgba(0, 0, 0, 0.65);
+    --hero-text: #f0e9f2;
+    --btn-fill: #f0e9f2;
+    --icon-filter: none;
 
+    --black: var(--bg);
+    --pink: var(--accent);
+    --white: var(--text-strong);
+    --white-1: var(--text-muted);
+    --border-light: 1px solid var(--border);
 
     --container-max-width: 1180px;
     --container-normal-width: 800px;
-    --container-medium-width: 700px; 
+    --container-medium-width: 700px;
     --container-small-width: 500px;
 
     --gutter-huge: 12rem;
@@ -50,8 +64,21 @@
     --gutter-normal: 3rem;
     --gutter-small-1: 2.5rem;
     --gutter-small: 2rem;
+}
 
-    --border-light: 1px solid rgb(36, 35, 35);
+[data-theme="light"] {
+    --bg: #f7f5f2;
+    --text: #2a2a2a;
+    --text-strong: #111;
+    --text-muted: #4a4a4a;
+    --accent: #ff3258;
+    --surface: #ffffff;
+    --border: #ddd8d2;
+    --overlay-start: rgba(0, 0, 0, 0.5);
+    --overlay-end: rgba(0, 0, 0, 0.7);
+    --hero-text: #f0e9f2;
+    --btn-fill: #111;
+    --icon-filter: invert(1) grayscale(1);
 }
 
 html {
@@ -70,10 +97,15 @@ body {
     font-size: var(--font-size-small);
     font-family: var(--font-stack);
     font-weight: 400;
-    color: var(--white-1);
+    color: var(--text);
     line-height: var(--line-height-normal);
-    background: var(--black);
+    background: var(--bg);
     overflow-x: hidden;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+body.theme-ready {
+    transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .row {
@@ -108,6 +140,7 @@ body {
 section {
     padding: var(--gutter-huge) 0;
     border-bottom: var(--border-light);
+    transition: border-color 0.25s ease;
 }
 
 img {
@@ -125,7 +158,8 @@ h3 {
     font-family: 'Jost', sans-serif;
     font-weight: 400;
     line-height: var(--line-height-small);
-    color: var(--white);
+    color: var(--text-strong);
+    transition: color 0.25s ease;
 }
 
 .heading-primary {
@@ -150,7 +184,7 @@ h2::after {
     display: block;
     height: 2px;
     width: 10rem;
-    background: var(--pink);
+    background: var(--accent);
     margin: var(--gutter-small) 0;
 }
 
@@ -178,7 +212,7 @@ p {
 }
 
 @media(max-width: 900px) {
-    p { 
+    p {
         max-width: var(--container-small-width);
     }
 }
@@ -188,7 +222,7 @@ p {
 /* --------------------------------------- */
 
 a {
-    color: var(--white);
+    color: var(--text-strong);
     font-weight: 400;
     font-family: 'Jost', sans-serif;
     transition: all .2s;
@@ -201,7 +235,7 @@ a {
 
 button:focus,
 a:focus {
-    outline: 2px solid var(--pink);
+    outline: 2px solid var(--accent);
 }
 
 body:not(.user-is-tabbing) button:focus,
@@ -210,7 +244,7 @@ body:not(.user-is-tabbing) a:focus {
 }
 
 .link:hover {
-    color: var(--pink);
+    color: var(--accent);
 }
 
 .btn {
@@ -219,8 +253,9 @@ body:not(.user-is-tabbing) a:focus {
     padding: 1rem 4.2rem;
     text-decoration: none;
     color: inherit;
-    border: 1px solid  var(--pink);
+    border: 1px solid var(--accent);
     font-weight: 400;
+    z-index: 0;
 }
 
 .btn:focus {
@@ -234,7 +269,7 @@ body:not(.user-is-tabbing) a:focus {
     top: 0;
     left: 0;
     right: 100%;
-    background: var(--white);
+    background: var(--btn-fill);
     height: 100%;
     z-index: -1;
     transition: all 0.2s cubic-bezier(1, 0.68, 0.16, 0.9);
@@ -243,11 +278,12 @@ body:not(.user-is-tabbing) a:focus {
 .btn:hover::after,
 .btn:focus::after {
     right: 0;
-    background: var(--pink);
+    background: var(--accent);
 }
 
 .btn--pink {
-    background: var(--pink);
+    background: var(--accent);
+    color: var(--hero-text);
     transition: all 0.2s;
 }
 
@@ -258,6 +294,7 @@ body:not(.user-is-tabbing) a:focus {
 .btn--pink:hover,
 .btn--pink:focus {
     background: transparent;
+    color: var(--hero-text);
 }
 
 .link__text {
@@ -266,7 +303,8 @@ body:not(.user-is-tabbing) a:focus {
     padding: .6rem;
     color: inherit;
     text-decoration: none;
-    border-bottom: 1px solid var(--pink);
+    border-bottom: 1px solid var(--accent);
+    z-index: 0;
 }
 
 .link__text::after {
@@ -276,7 +314,7 @@ body:not(.user-is-tabbing) a:focus {
     top: 0;
     left: 0;
     right: 100%;
-    background: var(--white);
+    background: var(--btn-fill);
     height: 100%;
     z-index: -1;
     transition: all 0.2s cubic-bezier(1, 0.68, 0.16, 0.9);
@@ -289,7 +327,7 @@ body:not(.user-is-tabbing) a:focus {
 .link__text:hover::after,
 .link__text:focus:after {
     right: 0;
-    background: var(--pink);
+    background: var(--accent);
 }
 
 .link__text span {
@@ -308,7 +346,7 @@ body:not(.user-is-tabbing) a:focus {
     align-items: center;
     height: 5.5rem;
     width: 5.5rem;
-    background-color: var(--pink);
+    background-color: var(--accent);
     border-radius: 50%;
     z-index: 10;
     visibility: hidden;
@@ -338,11 +376,13 @@ body:not(.user-is-tabbing) a:focus {
 .nav {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     padding: var(--gutter-normal) 0;
 }
 
 .nav__items {
     display: flex;
+    align-items: center;
     list-style: none;
 }
 
@@ -385,18 +425,66 @@ body:not(.user-is-tabbing) a:focus {
     right: 100%;
     display: inline-block;
     height: 1rem;
-    background: var(--white);
+    background: var(--hero-text);
     transition: all 0.25s cubic-bezier(1, 0.68, 0.16, 0.9);
 }
 
 .nav__link:hover {
-    color: var(--pink);
+    color: var(--accent);
 }
 
 .nav__link:hover::after {
     right: 0;
     height: 2px;
-    background: var(--pink);
+    background: var(--accent);
+}
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.2rem;
+    height: 4.2rem;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.25);
+    color: var(--hero-text);
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+}
+
+.theme-toggle:hover {
+    border-color: var(--accent);
+    transform: scale(1.05);
+}
+
+.theme-toggle__icon {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.theme-toggle__icon--sun {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.6);
+}
+
+.theme-toggle__icon--moon {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+}
+
+[data-theme="light"] .theme-toggle__icon--sun {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+}
+
+[data-theme="light"] .theme-toggle__icon--moon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.6);
 }
 
 /* --------------------------------------- */
@@ -404,19 +492,27 @@ body:not(.user-is-tabbing) a:focus {
 /* --------------------------------------- */
 
 .header {
-    background: linear-gradient(rgba(0,0,0, .45), rgba(0,0,0, .65)),
+    background: linear-gradient(var(--overlay-start), var(--overlay-end)),
         url('./images/kareem-ahmed.jpg');
     height: 100vh;
     background-size: cover;
     background-position: center 20%;
     background-attachment: fixed;
     font-size: var(--font-size-normal);
+    color: var(--hero-text);
+}
+
+.header .nav__link {
+    color: var(--hero-text);
 }
 
 .header__text {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    opacity: 0;
+    animation: hero-enter 0.8s ease forwards;
+    animation-delay: 0.15s;
 }
 
 .header__text p {
@@ -424,6 +520,11 @@ body:not(.user-is-tabbing) a:focus {
     max-width: var(--container-medium-width);
     font-family: 'Jost', sans-serif;
     font-size: var(--font-size-medium);
+    color: var(--hero-text);
+}
+
+.header .heading-primary {
+    color: var(--hero-text);
 }
 
 @media(max-width: 500px) {
@@ -433,6 +534,17 @@ body:not(.user-is-tabbing) a:focus {
 
     .header__text p {
         transform: scale(.8);
+    }
+}
+
+@keyframes hero-enter {
+    from {
+        opacity: 0;
+        transform: translateY(calc(-50% + 2rem));
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%);
     }
 }
 
@@ -472,7 +584,6 @@ body:not(.user-is-tabbing) a:focus {
 }
 
 .work__list {
-    /* list-style-type: square; */
     list-style-position: inside;
     margin-bottom: var(--gutter-normal);
 }
@@ -482,6 +593,7 @@ body:not(.user-is-tabbing) a:focus {
     height: 3rem;
     margin-left: var(--gutter-normal);
     transition: all .3s;
+    filter: var(--icon-filter);
 }
 
 .work__code:hover {
@@ -527,7 +639,8 @@ body:not(.user-is-tabbing) a:focus {
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--white-1);
+    color: var(--text-muted);
+    transition: color 0.25s ease;
 }
 
 .client__logo {
@@ -584,8 +697,8 @@ body:not(.user-is-tabbing) a:focus {
     max-width: 35rem;
     aspect-ratio: 1;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--pink), #c41e3a);
-    color: var(--white);
+    background: linear-gradient(135deg, var(--accent), #c41e3a);
+    color: var(--hero-text);
     font-size: var(--font-size-medium-1);
     font-weight: 600;
     letter-spacing: 0.1em;
@@ -599,7 +712,7 @@ body:not(.user-is-tabbing) a:focus {
     .about__text {
         flex: 0 0 35%;
     }
-    
+
     .about__photo-container {
         flex: 1;
         margin: 0 var(--gutter-huge) 0 0;
@@ -641,6 +754,8 @@ body:not(.user-is-tabbing) a:focus {
 
 .footer__social-image {
     height: 4rem;
+    filter: var(--icon-filter);
+    transition: filter 0.25s ease;
 }
 
 .footer__github-buttons {
@@ -657,5 +772,47 @@ body:not(.user-is-tabbing) a:focus {
 @media(max-width: 500px) {
     .footer {
         padding: var(--gutter-medium) 0;
-    } 
+    }
+}
+
+/* --------------------------------------- */
+/* ----- Scroll reveals ----- */
+/* --------------------------------------- */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.is-inview {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --------------------------------------- */
+/* ----- Reduced motion ----- */
+/* --------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .header__text {
+        opacity: 1;
+        transform: translateY(-50%);
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
 }

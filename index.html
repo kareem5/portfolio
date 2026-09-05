@@ -21,6 +21,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" type="image/png" href="./images/favicon.png" />
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
 
   <!-- Put your site title here -->
   <title>
@@ -49,6 +60,16 @@
           <li class="nav__item">
             <a href="#contact" class="nav__link">Contact</a>
           </li>
+          <li class="nav__item">
+            <button type="button" class="theme-toggle" aria-label="Toggle color theme" aria-pressed="false">
+              <svg class="theme-toggle__icon theme-toggle__icon--moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+              <svg class="theme-toggle__icon theme-toggle__icon--sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zm0-16a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1zm0 18a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm10-9a1 1 0 0 1-1 1h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 1 1zM4 12a1 1 0 0 1-1 1H2a1 1 0 1 1 0-2h1a1 1 0 0 1 1 1zm14.95 6.95a1 1 0 0 1 0 1.41l-.71.71a1 1 0 1 1-1.41-1.41l.71-.71a1 1 0 0 1 1.41 0zM6.76 5.34a1 1 0 0 1 0 1.41l-.71.71A1 1 0 0 1 4.64 6l.71-.71a1 1 0 0 1 1.41 0zm11.49-1.41.71.71a1 1 0 1 1-1.41 1.41l-.71-.71a1 1 0 0 1 1.41-1.41zM6.05 17.66l.71.71a1 1 0 1 1-1.41 1.41l-.71-.71a1 1 0 1 1 1.41-1.41z"/>
+              </svg>
+            </button>
+          </li>
         </ul>
       </nav>
     </div>
@@ -76,7 +97,7 @@
 
           <!-- Each div with the work__box class is a project. -->
 
-          <div class="work__box">
+          <div class="work__box reveal">
             <div class="work__text">
               <h3>National Bank of Kuwait (NBK)</h3>
               <p>
@@ -100,7 +121,7 @@
             </div>
           </div>
 
-          <div class="work__box">
+          <div class="work__box reveal">
             <div class="work__text">
               <h3>Tap Payments</h3>
               <p>
@@ -130,7 +151,7 @@
             </div>
           </div>
 
-          <div class="work__box">
+          <div class="work__box reveal">
             <div class="work__text">
               <h3>Carriage</h3>
               <p>
@@ -168,7 +189,7 @@
     <section class="client" id="clients">
       <div class="row">
         <h2>Clients</h2>
-        <div class="client__names">
+        <div class="client__names reveal">
           <span class="client__name">NBK</span>
           <span class="client__name">Tatayab</span>
           <span class="client__name">Glovo</span>
@@ -186,7 +207,7 @@
     <section class="about" id="about">
       <div class="row">
         <h2>About Me</h2>
-        <div class="about__content">
+        <div class="about__content reveal">
           <div class="about__text">
             <!-- Replace the below paragraph with info about yourself -->
             <p>
@@ -228,7 +249,7 @@
   <section class="contact" id="contact">
     <div class="row">
       <h2>Get in Touch</h2>
-      <div class="contact__info">
+      <div class="contact__info reveal">
         <p>
           Looking for a Senior iOS Engineer or Mobile Architect to drive architecture, mentor teams,
           and deliver high-impact mobile products? Whether you need help with fintech, delivery
