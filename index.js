@@ -86,7 +86,7 @@ if (prefersReducedMotion) {
   Scroll-spy active nav
  ---------------------------------------- */
 
-const sectionIds = ["about", "experience", "skills", "contact"];
+const sectionIds = ["about", "experience", "skills", "writing", "contact"];
 const sections = sectionIds
   .map((id) => document.getElementById(id))
   .filter(Boolean);
