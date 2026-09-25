@@ -317,7 +317,7 @@ body:not(.user-is-tabbing) button:focus {
   height: 18rem;
   border-radius: 1.6rem;
   object-fit: cover;
-  object-position: center 18%;
+  object-position: center 72%;
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
 }
